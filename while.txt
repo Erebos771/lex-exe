@@ -1,0 +1,34 @@
+LEX
+%{
+#include "parser.tab.h"
+%}
+%%
+"while" { return WHILE; }
+[a-zA-Z]+ { return ID; }
+[0-9]+ { return NUM; }
+"=="|"!="|"<"|">"|"<="|">=" { return RELOP; }
+[(){};] { return yytext[0]; }
+[ \t\n]+ ;
+. { return yytext[0]; }
+%%
+int yywrap() {return 1;}
+
+
+YACC
+%{
+#include <stdio.h>
+int yylex(void);
+int yyerror();
+%}
+%token WHILE ID NUM RELOP
+%%
+S : WHILE '(' C ')' STMT { printf("Valid while statement\n"); };
+C : ID RELOP ID | ID RELOP NUM | NUM RELOP ID | NUM RELOP NUM;
+STMT : ID ';' | '{' STMT '}';
+%%
+int main(){
+    printf("Enter while statement: ");
+    yyparse();
+    return 0;
+}
+int yyerror() {printf("Invalid while statement\n"); return 0;}
