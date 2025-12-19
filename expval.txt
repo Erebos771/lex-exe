@@ -1,0 +1,32 @@
+LEX
+%{
+#include "parser.tab.h"
+%}
+%%
+x { return ID; }
+[0-9]+ { return NUM; }
+[+\-*/()] { return yytext[0]; }
+[ \t\n]+ ;
+. { return yytext[0]; }
+%%
+int yywrap() {return 1;}
+
+YACC
+%{
+#include <stdio.h>
+int yylex(void);
+int yyerror(char *s);
+%}
+%token ID NUM
+%left '+' '-'
+%left '*' '/'
+%%
+E : E '+' E | E '-' E | E '*' E | E '/' E | '(' E ')' | ID | NUM;
+%%
+int main(){
+    printf("Enter expression: ");
+    if(!yyparse())
+        printf("Valid Expression\n");
+    return 0;
+}
+int yyerror(char *s) {printf("Invalid Expression\n"); return 0;}
