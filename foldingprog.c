@@ -28,10 +28,10 @@ int main() {
 
             int x = atoi(a1[i]), y = atoi(a2[i]), z = 0;
 
-            if (!strcmp(o[i], "+")) z = x + y;
-            if (!strcmp(o[i], "-")) z = x - y;
-            if (!strcmp(o[i], "*")) z = x * y;
-            if (!strcmp(o[i], "/")) z = x / y;
+            if (strcmp(o[i], "+") == 0) z = x + y;
+            if (strcmp(o[i], "-") == 0) z = x - y;
+            if (strcmp(o[i], "*") == 0) z = x * y;
+            if (strcmp(o[i], "/") == 0) z = x / y;
 
             printf("Folded: %s = %d\n", r[i], z);
 
@@ -53,3 +53,4 @@ int main() {
 
     return 0;
 }
+
